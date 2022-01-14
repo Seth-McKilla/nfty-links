@@ -1,42 +1,69 @@
-# Welcome to the NextJS wagmi starter template 👋
-Looking to get up and running with a Typescript / NextJS dApp as quickly as possible? You're in the right place! This repo serves as a minimal template for integrating the wagmi React hooks for Ethereum library with Typescript & NextJS. Due to its ease of customizability and extensibility, this template has been styled with the Tailwind CSS framework. Let's get to it!
-### Check out the live demo 👉 [NextJS wagmi](https://nextjs-wagmi.vercel.app/)
+<!-- REPLACE LINK WITH LIVE PROJECT SITE (IF APPLICABLE) -->
+# Welcome to the [INSERT PROJECT NAME](https://unstoppable-portfolio.vercel.app/)!
 
-## Get up and running in 3 simple steps:
+<!-- REPLACE IMAGE WITH PROJECT SCREENSHOT -->
+![placeholder](placeholder)
 
-### 1. Create an app using this repo as the template
-```bash
-npx create-next-app@latest -e https://github.com/Seth-McKilla/nextjs-wagmi
+<!-- REPLACE WITH A SIMPLE TAGLINE FOR THE PROJECT -->
+### *This is why you should use my project.*
+
+<!-- INSERT BOUNTY NAME AND LINK TO BOUNTY -->
+## Hackathon submission
+This project was created as a submission for the [INSERT BOUNTY NAME](https://gitcoin.co/) bounty within Gitcoin's <INSERT HACKATHON NAME (IF APPLICABLE)>.
+
+## Motivation for the project
+<!-- INSERT SMALL PITCH OF PROBLEM YOU'RE SOLVING, VALUE PROPOSITION, ETC. REFER TO https://www.canva.com/design/DAEhUeYe_fo/view FOR IDEAS -->
+
+<!-- REPLACE URL WITH LINK TO YOUTUBE VIDEO OR SHARE DRIVE -->
+## Demo of the project
+Check out the a demo video of the project [here](https://www.youtube.com/)!
+
+## Contact info for questions or feedback
+**Wallet Address: WALLET ADDRESS**
+<br>
+**Discord: DISCORD NAME**
+<br>
+**Email: EMAIL ADDRESS**
+<br>
+**Twitter: TWITTER HANDLE**
+<br>
+**Gitcoin: GITCOIN PROFILE**
+
+<!-- COPY AND PASTE TECH STACK AS NEEDED -->
+## The tech stack
+NAME: URL REFERENCE
+<br>
+NAME: URL REFERENCE
+<br>
+
+## Setup
+### Prerequisites
+<!-- LIST PREREQUISITES NEEDED TO SETUP THE PROJECT (SOFTWARE LIKE NODEJS, ACCOUNT WITH 3RD PARTY PROVIDER, ETC.) -->
+
+### Setup local development environment (backend)
+1. Clone the repo and navigate into the directory:
 ```
->Note: The above command automatically downloads and installs the dependencies so no "npm install" or "yarn add" required!
-
-### 2. Create a .env.local file within the root directory with the following environment variables
-```bash
-NEXT_PUBLIC_INFURA_ID=<insert infura id>
-```
->Note: Grab an Infura ID from the [Infura website](https://infura.io/)
-
-### 3. Start the local development environment
-```bash
-npm run dev
-# or
-yarn dev
+git clone <INSERT REMOTE REPO URL>
+...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. <INSERT STEP 2 NAME>:
+```
+STEP 2 COMMAND
+```
+<!-- ADD AS MANY STEPS AS NEEDED -->
 
-That's it, you're all set!
+### Setup local development environment (frontend)
+1. Clone the repo and navigate into the directory:
+```
+git clone https://github.com/Seth-McKilla/unstoppable-portfolio.git
+cd unstoppable-portfolio
+```
 
-## Resources
-To learn more about the packages used in this project, take a look at the following resources:
+2. <INSERT STEP 2 NAME>:
+```
+STEP 2 COMMAND
+```
+<!-- ADD AS MANY STEPS AS NEEDED -->
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [React Typescript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/setup/) - helpful tips for using Typescript with React.
-- [wagmi Documentation](https://wagmi-xyz.vercel.app/) - learn about the wagmi React hooks for Ethereum.
-- [Tailwind CSS Documentation](https://tailwindcss.com/) - learn about the Tailwind CSS styling framework.
-
-## Deploy on Vercel
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSeth-McKilla%2Fnextjs-wagmi&env=NEXT_PUBLIC_INFURA_ID)
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Thanks for checking out the project!
