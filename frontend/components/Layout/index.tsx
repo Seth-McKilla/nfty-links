@@ -1,17 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Button, MenuDropdown, WalletOptionsModal } from "..";
 import { useAccount } from "wagmi";
+import Link from "next/link";
 
-interface Props {
-  children: ReactNode;
-  showWalletOptions: boolean;
-  setShowWalletOptions: (showWalletOptions: boolean) => void;
-}
-
-export default function Layout(props: Props) {
-  const { children, showWalletOptions, setShowWalletOptions } = props;
+export default function Layout({ children }: { children: ReactNode }) {
+  const [showWalletOptions, setShowWalletOptions] = useState(false);
 
   const [{ data: accountData, loading }, disconnect] = useAccount({
     fetchEns: true,
@@ -88,9 +83,11 @@ export default function Layout(props: Props) {
       <div className="absolute w-screen bg-gradient-to-r from-black to-white">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center">
-            <h4 className="text-2xl font-bold text-white cursor-default">
-              Nfty Links
-            </h4>
+            <Link href="/" passHref>
+              <h4 className="text-2xl font-bold text-white cursor-pointer">
+                Nfty Links
+              </h4>
+            </Link>
           </div>
           {renderButton()}
         </div>
