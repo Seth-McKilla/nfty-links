@@ -6,3 +6,8 @@ server:
 application:
   hostname: ${APPLICATION_HOSTNAME:localhost:8082}
 
+nft:
+  storage:
+    api:
+      key: ${NFT_STORAGE_API_KEY:}
+      url: ${NFT_STORAGE_API_URL:https://api.nft.storage}

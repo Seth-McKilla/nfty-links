@@ -1,4 +1,4 @@
-version: '2'
+version: '3.7'
 
 services:
   dem_backend:
@@ -6,6 +6,8 @@ services:
     container_name: nifty-links-backend
     depends_on:
       - db_dem
+    env_file:
+      - ./.var.env
     environment:
       - REDIS_HOST=redis-10325.c100.us-east-1-4.ec2.cloud.redislabs.com
       - REDIS_PASSWORD=$REDIS_PASSWORD
@@ -13,5 +15,11 @@ services:
       - JWT_SECRET=$JWT_SECRET
       - BLOCKCHAIN_URL=$BLOCKCHAIN_URL
       - APPLICATION_HOSTNAME=api.nftlink.cc
+      - NFT_STORAGE_API_KEY=$NFT_STORAGE_API_KEY
+      - BLOCKCHAIN_MNEMONIC_PATH=$BLOCKCHAIN_MNEMONIC_PATH
+    volumes:
+      - type: bind
+        source: ./mnemonic.txt
+        target: /mnemomic.txt
     ports:
     - "8082:8082"
