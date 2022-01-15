@@ -5,7 +5,7 @@ services:
     image: 'kristjangrm/nifty-links-backend:main'
     container_name: nifty-links-backend
     env_file:
-      - ./.var.env
+      - .env
     environment:
       - REDIS_HOST=redis-10325.c100.us-east-1-4.ec2.cloud.redislabs.com
       - REDIS_PASSWORD=$REDIS_PASSWORD
