@@ -3,7 +3,6 @@ package cc.nftlink.backend.api.nft;
 import cc.nftlink.backend.db.model.Nft;
 import cc.nftlink.backend.db.model.User;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -18,7 +17,7 @@ public class NftController {
     private final NftService nftService;
 
     @PostMapping("nft/create")
-    public Nft createNFT(
+    public Nft createNFTLink(
             @RequestBody NftCreateRequest request,
             @ApiIgnore  @AuthenticationPrincipal User user
     ) {
@@ -34,7 +33,7 @@ public class NftController {
     }
 
     @PostMapping("nft/{uuid}")
-    public Nft createNFT(
+    public Nft mintNFT(
             @PathVariable("uuid") String id,
             @ApiIgnore @AuthenticationPrincipal User user
     ) {

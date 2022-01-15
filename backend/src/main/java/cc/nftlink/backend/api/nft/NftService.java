@@ -1,5 +1,7 @@
 package cc.nftlink.backend.api.nft;
 
+import cc.nftlink.backend.BlockchainService;
+import cc.nftlink.backend.IpfsService;
 import cc.nftlink.backend.db.model.Nft;
 import cc.nftlink.backend.db.model.User;
 import cc.nftlink.backend.db.repository.NftRepository;
@@ -7,13 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class NftService {
 
     private final NftRepository nftRepository;
+    private final BlockchainService blockchainService;
+    private final IpfsService ipfsService;
 
     // create new record in database for the NFT
     public Nft createNFT(NftCreateRequest request, User user) {
@@ -39,7 +42,15 @@ public class NftService {
     }
 
     public Nft mintNFT(String id, User user) {
-        return null;
+        var nft = nftRepository.findById(id).orElseThrow();
+        if (nft.isClaimed()) {
+            throw new IllegalArgumentException("This NFT has already been claimed");
+        }
+        String hash = ipfsService.createIpfsRecord(nft);
+        String nftHash =  blockchainService.mintNFT(user.getAddress(), hash);
+        nft.setClaimed(true);
+        nft.setAddress(nftHash);
+        return nftRepository.save(nft);
     }
 
     public List<Nft> getNFTbyCreator(String id, User user) {
