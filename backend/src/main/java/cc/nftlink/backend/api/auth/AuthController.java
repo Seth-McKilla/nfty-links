@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final UserRepository userRepository;
