@@ -1,0 +1,8 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+application:
+  hostname: ${APPLICATION_HOSTNAME:localhost:8082}
+

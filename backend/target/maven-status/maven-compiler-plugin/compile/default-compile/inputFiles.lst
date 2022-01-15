@@ -1,0 +1,15 @@
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/auth/AuthService.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/db/repository/UserRepository.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/auth/LoginRequest.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/auth/JwtTokenUtil.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/NftlinkApplication.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/nft/NftController.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/config/SwaggerConfig.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/nft/NftCreateRequest.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/config/JwtTokenFilter.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/db/model/Nft.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/nft/NftService.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/db/model/User.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/api/auth/AuthController.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/config/SecurityConfig.java
+/Users/kristjangrm/Code/github-com/nftlink/src/main/java/cc/nftlink/backend/db/repository/NftRepository.java
