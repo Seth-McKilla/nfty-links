@@ -3,7 +3,7 @@ import { Loader } from "..";
 interface Props {
   children: string | JSX.Element;
   width?: number;
-  loading: boolean;
+  loading: boolean | undefined;
   [x: string]: any;
 }
 
