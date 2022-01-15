@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Layout, Button } from "../../components";
+import { Button, FileDropzone, Layout } from "../../components";
 
 type Inputs = {
   name: string;
@@ -24,18 +24,26 @@ const Create: NextPage = () => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
+  console.log(errors);
+
   return (
     <Layout>
-      <div className="grid h-screen place-items-center ">
+      <div className="grid h-screen place-items-center">
         <form
-          className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-xl"
+          className="px-8 pb-8 bg-white rounded shadow-xl w-96"
           onSubmit={handleSubmit(onSubmit)}
+          autoComplete="off"
         >
-          <div className="mb-4">
+          <div className="mb-6">
+            <h1 className="flex justify-center mb-8 text-4xl">
+              Create New NFT
+            </h1>
+
             <label
               className="block mb-2 text-lg font-bold text-gray-700"
               htmlFor="name"
@@ -46,13 +54,15 @@ const Create: NextPage = () => {
               className="w-full px-5 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="name"
               type="text"
-              placeholder="Image name"
+              placeholder="Enter image name..."
               {...register("name", { required: true })}
             />
-            {errors.name && <span>This field is required</span>}
+            {errors.name && (
+              <span className="text-sm text-red-500">Name is required</span>
+            )}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-6">
             <label
               className="block mb-2 text-lg font-bold text-gray-700 "
               htmlFor="description"
@@ -63,10 +73,27 @@ const Create: NextPage = () => {
               className="w-full px-5 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="description"
               type="text"
-              placeholder="Image description"
+              placeholder="Enter image description..."
               {...register("description", { required: true })}
             />
-            {errors.description && <span>This field is required</span>}
+            {errors.description && (
+              <span className="text-sm text-red-500">
+                Description is required
+              </span>
+            )}
+          </div>
+
+          <div className="mb-10">
+            <label
+              className="block mb-2 text-lg font-bold text-gray-700 "
+              htmlFor="image"
+            >
+              Image
+            </label>
+            <FileDropzone name="image" control={control} />
+            {errors.image && (
+              <span className="text-sm text-red-500">Image is required</span>
+            )}
           </div>
 
           <Button type="submit" loading={false}>
