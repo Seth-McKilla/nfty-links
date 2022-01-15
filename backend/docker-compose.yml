@@ -17,6 +17,6 @@ services:
       - BLOCKCHAIN_MNEMONIC_PATH=$BLOCKCHAIN_MNEMONIC_PATH
       - BLOCKCHAIN_NFT_ADDRESS=$BLOCKCHAIN_NFT_ADDRESS
     volumes:
-      - .mnemonic.txt:.mnemonic.txt
+      - ./mnemonic.txt:/mnemonic.txt
     ports:
     - "8082:8082"
