@@ -1,11 +1,9 @@
-import { useState } from "react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import useAuthLogin from "../hooks/useAuthLogin";
-import { Button, Layout, Loader, WalletOptionsModal } from "../components";
+import { Layout, Loader } from "../components";
 
 const Home: NextPage = () => {
-  const [showWalletOptions, setShowWalletOptions] = useState(false);
   const [{ data: accountData, loading: accountLoading }] = useAccount();
   const {
     text,
@@ -30,12 +28,6 @@ const Home: NextPage = () => {
         <>
           <h1 className="mb-4 text-4xl font-bold">Welcome to Nfty Links!</h1>
           <h3 className="mb-8 text-2xl">Placeholder for value proposition.</h3>
-          <Button
-            loading={accountLoading}
-            onClick={() => setShowWalletOptions(true)}
-          >
-            Connect to Wallet
-          </Button>
         </>
       );
     }
@@ -51,21 +43,11 @@ const Home: NextPage = () => {
   };
 
   return (
-    <>
-      <WalletOptionsModal
-        open={showWalletOptions}
-        setOpen={setShowWalletOptions}
-      />
-
-      <Layout
-        showWalletOptions={showWalletOptions}
-        setShowWalletOptions={setShowWalletOptions}
-      >
-        <div className="grid h-screen place-items-center">
-          <div className="grid place-items-center">{renderContent()}</div>
-        </div>
-      </Layout>
-    </>
+    <Layout>
+      <div className="grid h-screen place-items-center">
+        <div className="grid place-items-center">{renderContent()}</div>
+      </div>
+    </Layout>
   );
 };
 
