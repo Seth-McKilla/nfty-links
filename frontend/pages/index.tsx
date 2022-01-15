@@ -1,44 +1,51 @@
 import { useState } from "react";
 import type { NextPage } from "next";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount } from "wagmi";
+import useAuthLogin from "../hooks/useAuthLogin";
 import { Button, Layout, Loader, WalletOptionsModal } from "../components";
 
 const Home: NextPage = () => {
   const [showWalletOptions, setShowWalletOptions] = useState(false);
   const [{ data: accountData, loading: accountLoading }] = useAccount();
-  const [{ data: balanceData, loading: balanceLoading }] = useBalance({
-    addressOrName: accountData?.address,
-    watch: true,
-  });
+  const {
+    text,
+    loading: loginLoading,
+    error,
+  } = useAuthLogin(accountData?.address);
 
-  const loading = (accountLoading || balanceLoading) && !balanceData;
+  const loading = accountLoading || loginLoading;
 
   const renderContent = () => {
     if (loading) return <Loader size={8} />;
-    if (balanceData) {
+    if (error)
       return (
         <>
-          <h1 className="mb-8 text-4xl font-bold">My Wallet</h1>
-          <div className="inline-flex place-items-center">
-            <h6 className="ml-2 text-2xl">{`Ξ ${Number(
-              balanceData?.formatted
-            ).toFixed(4)} ${balanceData?.symbol}`}</h6>
-          </div>
+          <h1 className="text-4xl">Error</h1>
+          <p className="text-2xl">{error}</p>
+        </>
+      );
+
+    if (!text) {
+      return (
+        <>
+          <h1 className="mb-4 text-4xl font-bold">Welcome to Nfty Links!</h1>
+          <h3 className="mb-8 text-2xl">Placeholder for value proposition.</h3>
+          <Button
+            loading={accountLoading}
+            onClick={() => setShowWalletOptions(true)}
+          >
+            Connect to Wallet
+          </Button>
         </>
       );
     }
 
     return (
       <>
-        <h1 className="mb-8 text-4xl font-bold">
-          Welcome to the NextJS wagmi template!
-        </h1>
-        <Button
-          loading={accountLoading}
-          onClick={() => setShowWalletOptions(true)}
-        >
-          Connect to Wallet
-        </Button>
+        <h1 className="mb-8 text-4xl font-bold">Login Data</h1>
+        <div className="inline-flex place-items-center">
+          <h6 className="ml-2 text-2xl">{text}</h6>
+        </div>
       </>
     );
   };

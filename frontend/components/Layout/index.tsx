@@ -75,7 +75,7 @@ export default function Layout(props: Props) {
   return (
     <div>
       <Head>
-        <title>NextJS wagmi</title>
+        <title>Nfty Links</title>
         <meta name="description" content="NextJS and wagmi template" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -89,7 +89,7 @@ export default function Layout(props: Props) {
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <h4 className="text-2xl font-bold text-white cursor-default">
-              NextJS wagmi
+              Nfty Links
             </h4>
           </div>
           {renderButton()}
