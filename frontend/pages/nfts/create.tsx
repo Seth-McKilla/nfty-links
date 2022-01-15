@@ -1,4 +1,4 @@
-import React from "react";
+import { NextPage } from "next";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Layout, Button } from "../../components";
@@ -19,7 +19,7 @@ const client = new NFTStorage({
   token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY,
 });
 
-export default function Create() {
+const Create: NextPage = () => {
   const {
     register,
     handleSubmit,
@@ -28,18 +28,16 @@ export default function Create() {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  console.log(watch());
-
   return (
     <Layout>
-      <div className="grid h-screen place-items-center">
+      <div className="grid h-screen place-items-center ">
         <form
-          className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md"
+          className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-xl"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="mb-4">
             <label
-              className="block mb-2 text-sm font-bold text-gray-700"
+              className="block mb-2 text-lg font-bold text-gray-700"
               htmlFor="name"
             >
               Name
@@ -56,7 +54,7 @@ export default function Create() {
 
           <div className="mb-4">
             <label
-              className="block mb-2 text-sm font-bold text-gray-700"
+              className="block mb-2 text-lg font-bold text-gray-700 "
               htmlFor="description"
             >
               Description
@@ -78,4 +76,6 @@ export default function Create() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Create;

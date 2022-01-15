@@ -1,7 +1,8 @@
+import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import useAuthLogin from "../hooks/useAuthLogin";
-import { Layout, Loader } from "../components";
+import { Layout, Loader, Button } from "../components";
 
 const Home: NextPage = () => {
   const [{ data: accountData, loading: accountLoading }] = useAccount();
@@ -15,29 +16,24 @@ const Home: NextPage = () => {
 
   const renderContent = () => {
     if (loading) return <Loader size={8} />;
+
     if (error)
       return (
         <>
-          <h1 className="text-4xl">Error</h1>
-          <p className="text-2xl">{error}</p>
+          <h1 className="mb-3 text-4xl">Oops!</h1>
+          <p className="text-xl text-red-500">{`Error: ${error}`}</p>
         </>
       );
-
-    if (!text) {
-      return (
-        <>
-          <h1 className="mb-4 text-4xl font-bold">Welcome to Nfty Links!</h1>
-          <h3 className="mb-8 text-2xl">Placeholder for value proposition.</h3>
-        </>
-      );
-    }
 
     return (
       <>
-        <h1 className="mb-8 text-4xl font-bold">Login Data</h1>
-        <div className="inline-flex place-items-center">
-          <h6 className="ml-2 text-2xl">{text}</h6>
-        </div>
+        <h1 className="mb-4 text-4xl font-bold">Welcome to Nfty Links!</h1>
+        <h3 className="mb-8 text-2xl">Placeholder for value proposition.</h3>
+        <Link href="/nfts/create" passHref>
+          <a>
+            <Button>Create NFT</Button>
+          </a>
+        </Link>
       </>
     );
   };
