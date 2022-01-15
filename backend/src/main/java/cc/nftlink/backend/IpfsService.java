@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.Data;
 import okhttp3.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class IpfsService {
     private String apiKey;
     @Value("${nft.storage.api.url}")
     private String apiUrl;
+
     /*
     Method creates json object that is compliant with erc721 token metadata spec
     Then it uploads json object to ipfs and returns its hash
@@ -48,8 +50,11 @@ public class IpfsService {
             Response response = null;
             try {
                 response = client.newCall(request).execute();
-                String resStr = response.body().string();
-                return resStr;
+                var resStr = response.body().string();
+                // convert string to jsonObject
+                JSONObject responseString = (new JSONObject(resStr)).getJSONObject("value");
+                String cid = responseString.getString("cid");
+                return cid;
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Error while uploading to ipfs");
