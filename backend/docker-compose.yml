@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  dem_backend:
+    image: 'kristjangrm/nifty-links-backend:main'
+    container_name: nifty-links-backend
+    depends_on:
+      - db_dem
+    environment:
+      - REDIS_HOST=redis-10325.c100.us-east-1-4.ec2.cloud.redislabs.com
+      - REDIS_PASSWORD=3kKJ6UiLhq5duqt2j2l8G2CI7tUssQOx
+      - REDIS_PORT=10325
+      - JWT_SECRET=superdupersecret
+      - TREASURY_ADDRESS=0x27e134648F3A0AEde4c529186B994a5698d04417
+      - BLOCKCHAIN_URL=https://rinkeby.infura.io/v3/008a35f990d64c7c9c76725800590db3
+      - APPLICATION_HOSTNAME=api.playdem.io
+    ports:
+    - "8082:8082"
