@@ -12,8 +12,7 @@ interface Props {
 export default function WalletOptionsModal(props: Props) {
   const { open, setOpen } = props;
 
-  const [{ data: connectData, loading: connectDataLoading, error }, connect] =
-    useConnect();
+  const [{ data: connectData, loading, error }, connect] = useConnect();
   const [{ data: accountData }] = useAccount();
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function WalletOptionsModal(props: Props) {
             {connectData.connectors.map((c) => (
               <div key={c.id} className="mb-2 ml-2 mr-2 w-80">
                 <Button
-                  loading={connectDataLoading}
+                  loading={loading}
                   width={80}
                   disabled={!c.ready}
                   onClick={() => connect(c)}
