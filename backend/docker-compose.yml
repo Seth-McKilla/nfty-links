@@ -4,8 +4,6 @@ services:
   dem_backend:
     image: 'kristjangrm/nifty-links-backend:main'
     container_name: nifty-links-backend
-    depends_on:
-      - db_dem
     env_file:
       - ./.var.env
     environment:
@@ -17,6 +15,7 @@ services:
       - APPLICATION_HOSTNAME=api.nftlink.cc
       - NFT_STORAGE_API_KEY=$NFT_STORAGE_API_KEY
       - BLOCKCHAIN_MNEMONIC_PATH=$BLOCKCHAIN_MNEMONIC_PATH
+      - BLOCKCHAIN_NFT_ADDRESS=$BLOCKCHAIN_NFT_ADDRESS
     volumes:
       - type: bind
         source: ./mnemonic.txt
