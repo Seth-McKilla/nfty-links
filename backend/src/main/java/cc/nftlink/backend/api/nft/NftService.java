@@ -50,10 +50,11 @@ public class NftService {
         String nftHash =  blockchainService.mintNFT(user.getAddress(), hash);
         nft.setClaimed(true);
         nft.setAddress(nftHash);
+        nft.setReceiver(user.getAddress());
         return nftRepository.save(nft);
     }
 
-    public List<Nft> getNFTbyCreator(String id, User user) {
+    public List<Nft> getNftsByCreator(User user) {
         return nftRepository.findByCreator(user.getAddress());
     }
 }

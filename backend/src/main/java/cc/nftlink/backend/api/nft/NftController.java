@@ -19,7 +19,7 @@ public class NftController {
     @PostMapping("nft/create")
     public Nft createNFTLink(
             @RequestBody NftCreateRequest request,
-            @ApiIgnore  @AuthenticationPrincipal User user
+            @ApiIgnore @AuthenticationPrincipal User user
     ) {
         return nftService.createNFT(request, user);
     }
@@ -42,9 +42,8 @@ public class NftController {
 
     @GetMapping("nfts")
     public List<Nft> getNFTs(
-            @PathVariable("id") String id,
             @ApiIgnore @AuthenticationPrincipal User user
     ) {
-        return nftService.getNFTbyCreator(id, user);
+        return nftService.getNftsByCreator(user);
     }
 }

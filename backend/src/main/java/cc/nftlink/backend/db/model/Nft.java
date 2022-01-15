@@ -23,4 +23,6 @@ public class Nft {
     private boolean claimed;
     @Indexed
     private String creator;
+    @Indexed
+    private String receiver;
 }
