@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NextPage } from "next";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -20,16 +21,35 @@ const client = new NFTStorage({
 });
 
 const Create: NextPage = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
   const {
     register,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  console.log(errors);
+  const onSubmit: SubmitHandler<Inputs> = async ({
+    name,
+    description,
+    image,
+  }) => {
+    setLoading(true);
+    try {
+      const metadata = await client.store({
+        name,
+        description,
+        image: new File([image], image.name, { type: image.type }),
+      });
+      console.log(metadata);
+    } catch (error: any) {
+      console.error(error);
+      setError(error.message);
+    }
+    return setLoading(false);
+  };
 
   return (
     <Layout>
@@ -96,10 +116,11 @@ const Create: NextPage = () => {
             )}
           </div>
 
-          <Button type="submit" loading={false}>
+          <Button type="submit" loading={loading}>
             Submit
           </Button>
         </form>
+        {error && <span className="text-red-500 text-md">{error}</span>}
       </div>
     </Layout>
   );
