@@ -26,5 +26,6 @@ public class Nft {
     @Indexed
     private String receiver;
     @Indexed
-    private String chain;
+    private String chain; // rinkeby, ethereum, polygon, harmony,
+    @Indexed NftTypeEnum type;
 }
