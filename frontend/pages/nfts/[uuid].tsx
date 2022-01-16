@@ -60,7 +60,7 @@ const ViewNFT = () => {
     }
     let token = localStorage.getItem("token");
     token && setAuthToken(token.toString());
-    console.log("HELLO: "  + uuid);
+    console.log("HELLO: " + uuid);
     // retrieve nft metadata
     fetch(`${NEXT_PUBLIC_API_URL}nft/${uuid}`, {
       method: "GET",
@@ -73,7 +73,7 @@ const ViewNFT = () => {
         setNft(r);
       });
     });
-    }, [ uuid]);
+  }, [uuid]);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -81,74 +81,88 @@ const ViewNFT = () => {
   };
 
 
-  const claim = () => {
-    console.log('claim')
+  const claim = (uuid: string) => {
+    fetch(`${NEXT_PUBLIC_API_URL}nft/${uuid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authToken}`
+      },
+    }).then(r => {
+      r.json().then(r => {
+        setNft(r);
+        console.log("nft claimed");
+      });
+    });
   }
 
-  return (
-    <Layout>
-      <div className="grid h-screen place-items-center">
-        <h1 className="mt-16 text-4xl font-bold">Welcome to Nfty Link!</h1>
-        <h3 className="text-2xl">You can claim the following nft: {uuid}</h3>
-        <div>
-          {nft.image.startsWith('http') && <Image
-              src={nft.image}
-              alt={nft.name}
-              width="100%"
-              height="100%"
-              layout="responsive"
-              objectFit="contain"
-          />}
-          <div className="px-2 py-2">
-            <div className="mb-2 text-xl font-bold">{nft.name}</div>
-            <p className="text-base text-gray-700"><b>Description: </b>{nft.description}</p>
-            <p className="text-base text-gray-700"><b>Creator: </b>{nft.creator}</p>
-            <p className="text-base text-gray-700"><b>Claimed: </b>{nft.claimed.toString()}</p>
-            {nft.receiver && <p className="text-base text-gray-700"><b>Receiver: </b>  {nft.receiver}</p>}
-            {nft.address && <p className="text-base text-gray-700"><b>Address: </b>  {nft.address}</p>}
-            {nft.id && <p className="text-base text-gray-700"><b>Claim ID: </b>  {nft.id}</p>}
-            {nft.image && <p className="text-base text-gray-700"><b>Image: </b>  {nft.image}</p>}
-          </div>
-        </div>
-        <div>
-          {authToken && <Button onClick={() => {
-            claim()
-          }}
-          >{"Claim"}
-          </Button>}
-        </div>
-        <div className="flex">
-          {authLogin.loading && authToken == '' && <div className="mr-6">
-              <Button onClick={() => {
-                getAuthToken()
-              }}>{"Login"}</Button>
-          </div>}
-          {authToken != '' && <div className="flex">
-              <div className="mr-6">
-                  <Button onClick={() => {
-                    logout()
-                  }}>{"Logout"}</Button>
-              </div>
-              <div className="mr-6">
-                  <Link href="/nfts" passHref>
-                      <a>
-                          <Button>{"View NFT's"}</Button>
-                      </a>
-                  </Link>
-              </div>
-              <div className="ml-6">
-                  <Link href="/nfts/create" passHref>
-                      <a>
-                          <Button>Create your own NFT</Button>
-                      </a>
-                  </Link>
-              </div>
-          </div>
-          }
+return (
+  <Layout>
+    <div className="grid h-screen place-items-center">
+      <h1 className="mt-16 text-4xl font-bold">Welcome to Nfty Link!</h1>
+      <h3 className="text-2xl">You can claim the following nft: {uuid}</h3>
+      <div>
+        {nft.image.startsWith('http') && <Image
+            src={nft.image}
+            alt={nft.name}
+            width="100%"
+            height="100%"
+            layout="responsive"
+            objectFit="contain"
+        />}
+        <div className="px-2 py-2">
+          <div className="mb-2 text-xl font-bold">{nft.name}</div>
+          <p className="text-base text-gray-700"><b>Description: </b>{nft.description}</p>
+          <p className="text-base text-gray-700"><b>Creator: </b>{nft.creator}</p>
+          <p className="text-base text-gray-700"><b>Claimed: </b>{nft.claimed.toString()}</p>
+          {nft.receiver && <p className="text-base text-gray-700"><b>Receiver: </b> {nft.receiver}</p>}
+          {nft.address && <p className="text-base text-gray-700"><b>Address: </b> {nft.address}</p>}
+          {nft.id && <p className="text-base text-gray-700"><b>Claim ID: </b> {nft.id}</p>}
+          {nft.image && <p className="text-base text-gray-700"><b>Image: </b> {nft.image}</p>}
         </div>
       </div>
-    </Layout>
-  )
+      <div>
+        {authToken &&
+            <Button onClick={() => {
+              claim(nft.id);
+            }}
+            >
+              {"Claim"}
+            </Button>
+        }
+      </div>
+      <div className="flex">
+        {authLogin.loading && authToken == '' && <div className="mr-6">
+            <Button onClick={() => {
+              getAuthToken()
+            }}>{"Login"}</Button>
+        </div>}
+        {authToken != '' && <div className="flex">
+            <div className="mr-6">
+                <Button onClick={() => {
+                  logout()
+                }}>{"Logout"}</Button>
+            </div>
+            <div className="mr-6">
+                <Link href="/nfts" passHref>
+                    <a>
+                        <Button>{"View NFT's"}</Button>
+                    </a>
+                </Link>
+            </div>
+            <div className="ml-6">
+                <Link href="/nfts/create" passHref>
+                    <a>
+                        <Button>Create your own NFT</Button>
+                    </a>
+                </Link>
+            </div>
+        </div>
+        }
+      </div>
+    </div>
+  </Layout>
+)
 
 
 }

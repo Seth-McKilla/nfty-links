@@ -71,7 +71,7 @@ const Home: NextPage = () => {
         <h1 className="mb-4 text-4xl font-bold">Welcome to Nfty Link!</h1>
         <h3 className="mb-8 text-2xl">Embed a NFT into a url and send it to anyone</h3>
         <div className="flex">
-          {authLogin.loading && authToken == '' && <div className="mr-6">
+          {authToken == '' && <div className="mr-6">
               <Button onClick={() => {
                 getAuthToken()
               }}>{"Login"}</Button>
