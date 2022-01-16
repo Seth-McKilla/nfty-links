@@ -11,6 +11,7 @@ export default function useAuthLogin(address: string | undefined) {
     isMounted.current = true;
 
     const login = async () => {
+      console.log("login");
       if (!address || !isMounted.current) return;
       setLoading(true);
       setError("");
@@ -21,6 +22,7 @@ export default function useAuthLogin(address: string | undefined) {
         );
         const data = await response.text();
         setText(data);
+        return data;
       } catch (error: any) {
         console.error(error);
         setError(error?.message);
@@ -29,7 +31,7 @@ export default function useAuthLogin(address: string | undefined) {
       return setLoading(false);
     };
 
-    login();
+    login().then(r => console.log("Response: " + r));
 
     return () => {
       isMounted.current = false;
