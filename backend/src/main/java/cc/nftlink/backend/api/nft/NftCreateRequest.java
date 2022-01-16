@@ -8,4 +8,5 @@ public class NftCreateRequest {
     private String image;
     private String description;
     private String chain;
+    private String type;
 }
