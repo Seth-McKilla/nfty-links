@@ -80,13 +80,13 @@ const Home: NextPage<Props> = (props) => {
                     objectFit="contain"
                 />}
                 <div className="px-2 py-2">
-                  <div className="mb-2 text-xl font-bold">{nft.name}</div>
+                  <div className="mb-2 text-xl font-bold"><b>Name: </b>{nft.name}</div>
+                  {nft.id && <p className="text-base text-gray-700"><b>Link: </b><a className="text-base text-purple-700" href={"https://nfty-links.vercel.app/nfts/"+nft.id}>{nft.id}</a> </p>}
                   <p className="text-base text-gray-700"><b>Description: </b>{nft.description}</p>
                   <p className="text-base text-gray-700"><b>Creator: </b>{nft.creator}</p>
                   <p className="text-base text-gray-700"><b>Claimed: </b>{nft.claimed.toString()}</p>
                   {nft.receiver && <p className="text-base text-gray-700"><b>Receiver: </b>  {nft.receiver}</p>}
                   {nft.address && <p className="text-base text-gray-700"><b>Address: </b>  {nft.address}</p>}
-                  {nft.id && <p className="text-base text-gray-700"><b>Claim ID: </b>  {nft.id}</p>}
                   {nft.image && <p className="text-base text-gray-700"><b>Image: </b>  {nft.image}</p>}
                   {nft.chain && <p className="text-base text-gray-700"><b>Chain: </b>  {nft.chain}</p>}
                 </div>

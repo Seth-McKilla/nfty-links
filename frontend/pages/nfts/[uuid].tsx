@@ -112,7 +112,8 @@ return (
             objectFit="contain"
         />}
         <div className="px-2 py-2">
-          <div className="mb-2 text-xl font-bold">{nft.name}</div>
+          <div className="mb-2 text-xl font-bold"><b>Name: </b>{nft.name}</div>
+          {nft.id && <p className="text-base text-gray-700"><b>Link: </b><a className="text-base text-purple-700" href={"https://nfty-links.vercel.app/nfts/"+nft.id}>{nft.id}</a> </p>}
           <p className="text-base text-gray-700"><b>Description: </b>{nft.description}</p>
           <p className="text-base text-gray-700"><b>Creator: </b>{nft.creator}</p>
           <p className="text-base text-gray-700"><b>Claimed: </b>{nft.claimed.toString()}</p>
@@ -125,11 +126,11 @@ return (
       </div>
       <div>
         {authToken &&
-            <Button onClick={() => {
+            <Button disabled={nft.claimed} onClick={() => {
               claim(nft.id);
             }}
             >
-              {"Claim"}
+              {nft.claimed ? "Already claimed" : "Claim"}
             </Button>
         }
       </div>
