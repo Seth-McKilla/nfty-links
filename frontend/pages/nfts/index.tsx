@@ -1,8 +1,9 @@
+import Link from "next/link";
 import Image from "next/image";
 import { NextPage } from "next";
 import { Button, Layout } from "../../components";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+
 const { NEXT_PUBLIC_API_URL } = process.env;
 
 type NFT = {
@@ -87,6 +88,7 @@ const Home: NextPage<Props> = (props) => {
                   <b>Name: </b>
                   {nft.name}
                 </div>
+
                 {nft.id && (
                   <p className="text-base text-gray-700">
                     <b>Link: </b>
@@ -98,33 +100,63 @@ const Home: NextPage<Props> = (props) => {
                     </a>
                   </p>
                 )}
+
                 <p className="text-base text-gray-700">
                   <b>Description: </b>
                   {nft.description}
                 </p>
+
                 <p className="text-base text-gray-700">
                   <b>Creator: </b>
-                  {nft.creator}
+                  <Link
+                    href={`https://rinkeby.etherscan.io/address/${nft.creator}`}
+                    passHref
+                  >
+                    <a target="__blank" className="text-purple-700">
+                      {nft.creator}
+                    </a>
+                  </Link>
                 </p>
+
                 <p className="text-base text-gray-700">
                   <b>Claimed: </b>
                   {nft.claimed.toString()}
                 </p>
+
                 {nft.receiver && (
                   <p className="text-base text-gray-700">
-                    <b>Receiver: </b> {nft.receiver}
+                    <b>Receiver: </b>
+                    <Link
+                      href={`https://rinkeby.etherscan.io/address/${nft.receiver}`}
+                      passHref
+                    >
+                      <a target="__blank" className="text-purple-700">
+                        {nft.receiver}
+                      </a>
+                    </Link>
                   </p>
                 )}
+
                 {nft.address && (
                   <p className="text-base text-gray-700">
-                    <b>Address: </b> {nft.address}
+                    <b>Address: </b>
+                    <Link
+                      href={`https://rinkeby.etherscan.io/tx/${nft.address}`}
+                      passHref
+                    >
+                      <a target="__blank" className="text-purple-700">
+                        {nft.address}
+                      </a>
+                    </Link>
                   </p>
                 )}
+
                 {nft.image && (
                   <p className="text-base text-gray-700">
                     <b>Image: </b> {nft.image}
                   </p>
                 )}
+
                 {nft.chain && (
                   <p className="text-base text-gray-700">
                     <b>Chain: </b> {nft.chain}
