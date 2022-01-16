@@ -55,7 +55,7 @@ const Create: NextPage = () => {
       });
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/nft/create`,
+        `${process.env.NEXT_PUBLIC_API_URL}nft/create`,
         {
           method: "POST",
           headers: {

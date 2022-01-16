@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     if (data?.address) {
       authLogin.text && signMessage({message: authLogin.text}).then(r => {
         const response = fetch(
-          `${NEXT_PUBLIC_API_URL}/auth/token`,
+          `${NEXT_PUBLIC_API_URL}auth/token`,
           {
             method: "POST",
             headers: {

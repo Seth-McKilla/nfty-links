@@ -34,7 +34,7 @@ const Home: NextPage<Props> = (props) => {
       if (token) {
         setAuthToken(token);
         const response = fetch(
-          `${NEXT_PUBLIC_API_URL}/nfts`,
+          `${NEXT_PUBLIC_API_URL}nfts`,
           {
             method: "GET",
             headers: {
@@ -108,7 +108,7 @@ export async function getStaticProps() {
     },
   ];
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/nfts`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}nfts`);
     nfts = await response.json();
 
     return {

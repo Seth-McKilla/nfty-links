@@ -31,7 +31,7 @@ const ViewNFT = () => {
     if (data?.address) {
       authLogin.text && signMessage({message: authLogin.text}).then(r => {
         const response = fetch(
-          `${NEXT_PUBLIC_API_URL}/auth/token`,
+          `${NEXT_PUBLIC_API_URL}auth/token`,
           {
             method: "POST",
             headers: {
@@ -62,7 +62,7 @@ const ViewNFT = () => {
     token && setAuthToken(token.toString());
     console.log("HELLO: "  + uuid);
     // retrieve nft metadata
-    fetch(`${NEXT_PUBLIC_API_URL}/nft/${uuid}`, {
+    fetch(`${NEXT_PUBLIC_API_URL}nft/${uuid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
