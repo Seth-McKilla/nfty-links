@@ -22,15 +22,7 @@ public class NftService {
 
     // create new record in database for the NFT
     public Nft createNFT(NftCreateRequest request, User user) {
-        if (request.getType().equals("rarible")) {
-            return raribleService.importRaribleToken(request, user);
-        }
-        if (request.getType().equals("zora")) {
-            return zoraService.importZoraToken(request, user);
-        }
-        if (request.getType().equals("openSea")) {
-            return openSeaService.importOpenSeaToken(request, user);
-        } else {
+        if (request.getType() == null) {
             var nft = Nft.builder()
                     .description(request.getDescription())
                     .name(request.getName())
@@ -41,6 +33,17 @@ public class NftService {
                     .address(null)
                     .build();
             return nftRepository.save(nft);
+        }
+        if (request.getType().equals("rarible")) {
+            return raribleService.importRaribleToken(request, user);
+        }
+        if (request.getType().equals("zora")) {
+            return zoraService.importZoraToken(request, user);
+        }
+        if (request.getType().equals("openSea")) {
+            return openSeaService.importOpenSeaToken(request, user);
+        } else {
+            throw new IllegalArgumentException("Invalid token type");
         }
     }
 
