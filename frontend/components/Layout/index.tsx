@@ -70,7 +70,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div>
       <Head>
-        <title>Nfty Link</title>
+        <title>Nft Link</title>
         <meta name="description" content="NextJS and wagmi template" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

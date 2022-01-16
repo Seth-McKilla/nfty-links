@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
@@ -8,6 +9,7 @@ import {
   FileDropzone,
   Layout,
   Select,
+  Modal,
 } from "../../components";
 import Link from "next/link";
 
@@ -30,9 +32,12 @@ const client = new NFTStorage({
 });
 
 const Create: NextPage = () => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [authToken, setAuthToken] = useState<string>("");
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
   const {
     register,
@@ -61,35 +66,52 @@ const Create: NextPage = () => {
         image: new File([image], image.name, { type: image.type }),
       });
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}nft/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${authToken}`,
-          },
-          body: JSON.stringify({
-            name,
-            description,
-            image: metadata.ipnft,
-          }),
-        }
-      );
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}nft/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          description,
+          image: metadata.ipnft,
+        }),
+      });
 
-      const data = await response.json();
-      console.log(data);
-      console.log("NFT CREATED");
+      setShowSuccessModal(true);
     } catch (error: any) {
       console.error(error);
       setError(error.message);
     }
+
     return setLoading(false);
   };
 
   return (
     <Layout>
-      <div className="grid h-screen place-items-center">
+      {showSuccessModal && (
+        <Modal open={showSuccessModal}>
+          <div className="p-4 text-center">
+            <h1 className="mb-4 text-4xl font-bold">Success ✅</h1>
+            <p className="text-xl">Successfully created NFT!</p>
+            <div className="flex items-center justify-end p-3 mt-1">
+              <button
+                className="px-6 py-2 mb-1 text-sm font-semibold text-red-500 uppercase"
+                type="button"
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  return router.push("/nfts");
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      <div className="grid pt-40 place-items-center">
         <form
           className="px-8 pb-8 bg-white rounded shadow-xl w-96"
           onSubmit={handleSubmit(onSubmit)}
@@ -189,10 +211,10 @@ const Create: NextPage = () => {
             Submit
           </Button>
         </form>
-        <div className="mr-6">
+        <div className="mt-8">
           <Link href="/nfts" passHref>
             <a>
-              <Button>{"View NFT's"}</Button>
+              <Button>{"View All NFT's"}</Button>
             </a>
           </Link>
         </div>
