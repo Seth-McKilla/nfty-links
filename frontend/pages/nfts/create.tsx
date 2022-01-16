@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Button, FileDropzone, Layout } from "../../components";
+import { Button, Checkbox, FileDropzone, Layout } from "../../components";
 import Link from "next/link";
 
 type Inputs = {
@@ -36,7 +36,7 @@ const Create: NextPage = () => {
   } = useForm<Inputs>();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setAuthToken(token);
     }
@@ -46,7 +46,7 @@ const Create: NextPage = () => {
     name,
     description,
     image,
-    chain
+    chain,
   }) => {
     setLoading(true);
     try {
@@ -74,7 +74,7 @@ const Create: NextPage = () => {
 
       const data = await response.json();
       console.log(data);
-      console.log("NFT CREATED")
+      console.log("NFT CREATED");
     } catch (error: any) {
       console.error(error);
       setError(error.message);
@@ -149,10 +149,22 @@ const Create: NextPage = () => {
               {...register("chain", { required: true })}
             />
             {errors.chain && (
-              <span className="text-sm text-red-500">
-                Chain is required
-              </span>
+              <span className="text-sm text-red-500">Chain is required</span>
             )}
+          </div>
+
+          <div className="mb-6">
+            <div className="form-check">
+              <label
+                className="block mb-2 text-lg font-bold text-gray-700 "
+                htmlFor="description"
+              >
+                Publish to Marketplace
+              </label>
+              <Checkbox label="OpenSea" />
+              <Checkbox label="Rarible" />
+              <Checkbox label="Zora" />
+            </div>
           </div>
 
           <div className="mb-10">

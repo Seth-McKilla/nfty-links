@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { ReactNode, useState } from "react";
 import { Button, MenuDropdown, WalletOptionsModal } from "..";
 import { useAccount } from "wagmi";
-import Link from "next/link";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [showWalletOptions, setShowWalletOptions] = useState(false);
@@ -84,7 +84,13 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Link href="/" passHref>
-              <Image src="/images/nftlink.png" alt="Nfty Link" layout={'fixed'} width={'100%'} height={'70%'}/>
+              <Image
+                src="/images/nftlink.png"
+                alt="Nfty Link"
+                width={130}
+                height={65}
+                className="cursor-pointer"
+              />
             </Link>
           </div>
           {renderButton()}
