@@ -1,8 +1,9 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { NextPage } from "next";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, FileDropzone, Layout } from "../../components";
+import Link from "next/link";
 
 type Inputs = {
   name: string;
@@ -24,6 +25,7 @@ const client = new NFTStorage({
 const Create: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [authToken, setAuthToken] = useState<string>("");
 
   const {
     register,
@@ -31,6 +33,13 @@ const Create: NextPage = () => {
     control,
     formState: { errors },
   } = useForm<Inputs>();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setAuthToken(token);
+    }
+  }, [errors]);
 
   const onSubmit: SubmitHandler<Inputs> = async ({
     name,
@@ -51,6 +60,7 @@ const Create: NextPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${authToken}`,
           },
           body: JSON.stringify({
             name,
@@ -62,6 +72,7 @@ const Create: NextPage = () => {
 
       const data = await response.json();
       console.log(data);
+      console.log("NFT CREATED")
     } catch (error: any) {
       console.error(error);
       setError(error.message);
@@ -141,6 +152,13 @@ const Create: NextPage = () => {
             Submit
           </Button>
         </form>
+        <div className="mr-6">
+          <Link href="/nfts" passHref>
+            <a>
+              <Button>{"View NFT's"}</Button>
+            </a>
+          </Link>
+        </div>
       </div>
     </Layout>
   );

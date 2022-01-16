@@ -80,13 +80,11 @@ export default function Layout({ children }: { children: ReactNode }) {
         setOpen={setShowWalletOptions}
       />
 
-      <div className="absolute w-screen bg-gradient-to-r from-black to-white">
+      <div className="absolute w-screen bg-gradient-to-r from-white via-purple-500 to-pink-500">
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center">
             <Link href="/" passHref>
-              <h4 className="text-2xl font-bold text-white cursor-pointer">
-                Nfty Link
-              </h4>
+              <Image src="/images/nftlink.png" alt="Nfty Link" layout={'fixed'} width={'100%'} height={'70%'}/>
             </Link>
           </div>
           {renderButton()}

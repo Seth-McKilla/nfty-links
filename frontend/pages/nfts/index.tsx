@@ -1,7 +1,8 @@
 import Image from "next/image";
 import {NextPage} from "next";
-import {Layout} from "../../components";
+import {Button, Layout} from "../../components";
 import {useEffect, useState} from "react";
+import Link from "next/link";
 const {NEXT_PUBLIC_API_URL} = process.env;
 
 type NFT = {
@@ -55,6 +56,13 @@ const Home: NextPage<Props> = (props) => {
     return (
       <Layout>
         <div className="grid p-32">
+          <div className="mr-6">
+            <Link href="/" passHref>
+              <a>
+                <Button>{"Return Home"}</Button>
+              </a>
+            </Link>
+          </div>
           <h1 className="grid text-4xl place-items-center">{"My NFT's"}</h1>
           <div className="grid grid-cols-1 gap-5 p-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2">
             {nfts?.map((nft, idx) => (
@@ -78,6 +86,7 @@ const Home: NextPage<Props> = (props) => {
                   {nft.receiver && <p className="text-base text-gray-700"><b>Receiver: </b>  {nft.receiver}</p>}
                   {nft.address && <p className="text-base text-gray-700"><b>Address: </b>  {nft.address}</p>}
                   {nft.id && <p className="text-base text-gray-700"><b>Claim ID: </b>  {nft.id}</p>}
+                  {nft.image && <p className="text-base text-gray-700"><b>Image: </b>  {nft.image}</p>}
                 </div>
               </div>
             ))}

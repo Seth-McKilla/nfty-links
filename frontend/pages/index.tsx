@@ -7,6 +7,7 @@ import useAuthLogin from "../hooks/useAuthLogin";
 const {NEXT_PUBLIC_API_URL} = process.env;
 import {verifyMessage} from 'ethers/lib/utils'
 import {useEffect, useState} from "react";
+import Image from "next/image";
 
 
 const Home: NextPage = () => {
@@ -68,7 +69,7 @@ const Home: NextPage = () => {
     return (
       <>
         <h1 className="mb-4 text-4xl font-bold">Welcome to Nfty Link!</h1>
-        <h3 className="mb-8 text-2xl">Placeholder for value proposition.</h3>
+        <h3 className="mb-8 text-2xl">Embed a NFT into a url and send it to anyone</h3>
         <div className="flex">
           {authLogin.loading && authToken == '' && <div className="mr-6">
               <Button onClick={() => {
