@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { NextPage } from "next";
-import { Button, Layout } from "../../components";
 import { useEffect, useState } from "react";
+import { Button, Layout } from "../../components";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
 
