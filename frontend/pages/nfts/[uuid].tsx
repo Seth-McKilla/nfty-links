@@ -118,7 +118,7 @@ const ViewNFT = () => {
                     <b>Link: </b>
                     <a
                       className="text-base text-purple-700"
-                      href={"https://nfty-links.vercel.app/nfts/" + nft.id}
+                      href={"https://nftlink.cc/nfts/" + nft.id}
                     >
                       {nft.id}
                     </a>{" "}
