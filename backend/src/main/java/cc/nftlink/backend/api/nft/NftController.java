@@ -29,7 +29,7 @@ public class NftController {
             @PathVariable("uuid") String id,
             @ApiIgnore @AuthenticationPrincipal User user
     ) {
-        return nftService.getNFT(id, user);
+        return nftService.getNFT(id);
     }
 
     @PostMapping("nft/{uuid}")

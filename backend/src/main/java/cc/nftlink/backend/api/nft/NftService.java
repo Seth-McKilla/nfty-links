@@ -47,13 +47,8 @@ public class NftService {
         }
     }
 
-    public Nft getNFT(String id, User user) {
-        var nft = nftRepository.findById(id).orElseThrow();
-        if (nft.getCreator().equals(user.getAddress())) {
-            return nft;
-        } else {
-            throw new IllegalArgumentException("You are not the owner of this NFT");
-        }
+    public Nft getNFT(String id) {
+        return nftRepository.findById(id).orElseThrow();
 
     }
 
