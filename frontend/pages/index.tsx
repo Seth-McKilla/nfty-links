@@ -1,26 +1,32 @@
 import Link from "next/link";
 import type { NextPage } from "next";
+import { useEffect, useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import { Layout, Loader, Button } from "../components";
 import useAuthLogin from "../hooks/useAuthLogin";
+import { ImportOptionsModal } from "../components";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
-import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
-  const [loginLoading, setLoginLoading] = useState(false);
+  // Hooks
   const [{ data: accountData, error: accountError, loading: accountLoading }] =
     useAccount();
-  const { text } = useAuthLogin(accountData?.address);
+  const { text, loading: authLoading } = useAuthLogin(accountData?.address);
   const [_, signMessage] = useSignMessage();
-  const [authToken, setAuthToken] = useState("");
+
+  // Local State
+  const [loginLoading, setLoginLoading] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<string>("");
+  const [authToken, setAuthToken] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const getAuthToken = async () => {
     if (!accountData?.address) return;
     setLoginLoading(true);
 
     try {
-      const sig = await signMessage({ message: text });
+      const { data: sig } = await signMessage({ message: text });
       const response = await fetch(`${NEXT_PUBLIC_API_URL}auth/token`, {
         method: "POST",
         headers: {
@@ -31,12 +37,13 @@ const Home: NextPage = () => {
           sig,
         }),
       });
-      const token = await response.json();
+      const token = await response.text();
 
       localStorage.setItem("token", token);
       setAuthToken(token);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setLoginError(error?.message);
     }
 
     return setLoginLoading(false);
@@ -45,7 +52,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     let token = localStorage.getItem("token");
     token && setAuthToken(token.toString());
-    console.log(token);
   }, [accountData?.address]);
 
   const logout = () => {
@@ -54,7 +60,7 @@ const Home: NextPage = () => {
   };
 
   const renderContent = () => {
-    if (accountLoading) return <Loader size={8} />;
+    if (accountLoading || authLoading) return <Loader size={8} />;
 
     if (accountError)
       return (
@@ -89,12 +95,15 @@ const Home: NextPage = () => {
                   </a>
                 </Link>
               </div>
-              <div className="ml-6">
+              <div className="mr-6">
                 <Link href="/nfts/create" passHref>
                   <a>
                     <Button>Create NFT</Button>
                   </a>
                 </Link>
+              </div>
+              <div>
+                <Button onClick={() => setShowModal(true)}>Import NFT</Button>
               </div>
             </div>
           ) : (
@@ -109,6 +118,7 @@ const Home: NextPage = () => {
               </Button>
             </div>
           )}
+          {loginError && <p className="text-sm text-red-500">{loginError}</p>}
         </div>
       </>
     );
@@ -116,6 +126,10 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
+      {showModal && (
+        <ImportOptionsModal open={showModal} setOpen={setShowModal} />
+      )}
+
       <div className="grid h-screen place-items-center">
         <div className="grid place-items-center">{renderContent()}</div>
       </div>
