@@ -70,7 +70,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div>
       <Head>
-        <title>Nfty Links</title>
+        <title>Nfty Link</title>
         <meta name="description" content="NextJS and wagmi template" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -85,7 +85,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className="flex items-center">
             <Link href="/" passHref>
               <h4 className="text-2xl font-bold text-white cursor-pointer">
-                Nfty Links
+                Nfty Link
               </h4>
             </Link>
           </div>

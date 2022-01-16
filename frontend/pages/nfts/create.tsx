@@ -13,6 +13,7 @@ type Inputs = {
 declare const process: {
   env: {
     NEXT_PUBLIC_NFT_STORAGE_API_KEY: string;
+    NEXT_PUBLIC_API_URL: string;
   };
 };
 
@@ -43,7 +44,24 @@ const Create: NextPage = () => {
         description,
         image: new File([image], image.name, { type: image.type }),
       });
-      console.log(metadata);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/nft/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            description,
+            image: metadata.ipnft,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
     } catch (error: any) {
       console.error(error);
       setError(error.message);
@@ -115,12 +133,14 @@ const Create: NextPage = () => {
               <span className="text-sm text-red-500">Image is required</span>
             )}
           </div>
+          {error && (
+            <span className="text-sm text-red-500">{`Error: ${error}`}</span>
+          )}
 
           <Button type="submit" loading={loading}>
             Submit
           </Button>
         </form>
-        {error && <span className="text-red-500 text-md">{error}</span>}
       </div>
     </Layout>
   );

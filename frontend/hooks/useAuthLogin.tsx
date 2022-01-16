@@ -17,7 +17,7 @@ export default function useAuthLogin(address: string | undefined) {
 
       try {
         const response = await fetch(
-          `${NEXT_PUBLIC_API_URL}auth/login?publicAddress=${address}`
+          `${NEXT_PUBLIC_API_URL}/auth/login?publicAddress=${address}`
         );
         const data = await response.text();
         setText(data);
