@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { NextPage } from "next";
-import { Layout } from "../../components";
+import {NextPage} from "next";
+import {Layout} from "../../components";
+import {useEffect, useState} from "react";
+const {NEXT_PUBLIC_API_URL} = process.env;
 
 type NFT = {
   name: string;
@@ -14,37 +16,77 @@ interface Props {
 }
 
 const Home: NextPage<Props> = (props) => {
-  const { nfts, error } = props;
+    const [nfts, setNfts] = useState([{
+      address: "",
+      claimed: "",
+      creator: "",
+      description: "",
+      id: "",
+      image: "",
+      name: "",
+      receiver: ""
+    }]);
+    const [authToken, setAuthToken] = useState('')
 
-  return (
-    <Layout>
-      <div className="grid p-32">
-        <h1 className="grid text-4xl place-items-center">{"My NFT's"}</h1>
-        <div className="grid grid-cols-1 gap-5 p-10 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-          {nfts?.map((nft, idx) => (
-            <div
-              key={`${idx}-${nft.name}`}
-              className="overflow-hidden rounded-md shadow-xl"
-            >
-              <Image
-                src={nft.image}
-                alt={nft.name}
-                width="100%"
-                height="100%"
-                layout="responsive"
-                objectFit="contain"
-              />
-              <div className="px-2 py-2">
-                <div className="mb-2 text-xl font-bold">{nft.name}</div>
-                <p className="text-base text-gray-700">{nft.description}</p>
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setAuthToken(token);
+        const response = fetch(
+          `${NEXT_PUBLIC_API_URL}/nfts`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+          }
+        );
+        response.then(res => res.json()).then(res => {
+          if (res.error) {
+            console.log(res.error);
+          } else {
+            setNfts(res);
+          }
+        });
+      }
+    }, []);
+
+    return (
+      <Layout>
+        <div className="grid p-32">
+          <h1 className="grid text-4xl place-items-center">{"My NFT's"}</h1>
+          <div className="grid grid-cols-1 gap-5 p-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2">
+            {nfts?.map((nft, idx) => (
+              <div
+                key={`${idx}-${nft.address}`}
+                className="overflow-hidden rounded-md shadow-xl"
+              >
+                {nft.image.startsWith('http') && <Image
+                    src={nft.image}
+                    alt={nft.name}
+                    width="100%"
+                    height="100%"
+                    layout="responsive"
+                    objectFit="contain"
+                />}
+                <div className="px-2 py-2">
+                  <div className="mb-2 text-xl font-bold">{nft.name}</div>
+                  <p className="text-base text-gray-700"><b>Description: </b>{nft.description}</p>
+                  <p className="text-base text-gray-700"><b>Creator: </b>{nft.creator}</p>
+                  <p className="text-base text-gray-700"><b>Claimed: </b>{nft.claimed.toString()}</p>
+                  {nft.receiver && <p className="text-base text-gray-700"><b>Receiver: </b>  {nft.receiver}</p>}
+                  {nft.address && <p className="text-base text-gray-700"><b>Address: </b>  {nft.address}</p>}
+                  {nft.id && <p className="text-base text-gray-700"><b>Claim ID: </b>  {nft.id}</p>}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </Layout>
-  );
-};
+      </Layout>
+    );
+  }
+;
 
 export async function getStaticProps() {
   let nfts = [
@@ -61,11 +103,11 @@ export async function getStaticProps() {
     nfts = await response.json();
 
     return {
-      props: { nfts, error: null },
+      props: {nfts, error: null},
     };
   } catch (error: any) {
     console.error(error);
-    return { props: { nfts, error: error?.message } };
+    return {props: {nfts, error: error?.message}};
   }
 }
 
