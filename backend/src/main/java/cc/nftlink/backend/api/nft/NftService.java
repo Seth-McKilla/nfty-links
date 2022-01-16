@@ -68,4 +68,8 @@ public class NftService {
     public List<Nft> getNftsByCreator(User user) {
         return nftRepository.findByCreator(user.getAddress());
     }
+
+    public List<Nft> getNftsByCreatorOrReceiver(User user) {
+        return nftRepository.findByCreatorOrReceiver(user.getAddress(), user.getAddress());
+    }
 }

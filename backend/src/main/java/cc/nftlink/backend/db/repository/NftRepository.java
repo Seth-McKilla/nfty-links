@@ -16,4 +16,7 @@ public interface NftRepository extends CrudRepository<Nft, String> {
     Optional<Nft> findByAddressIgnoreCase(String email);
     Optional<Nft> findByUUId(UUID id);
     List<Nft> findByCreator(String creator);
+    List<Nft> findByReceiver(String receiver);
+    // findby Receiver or Creator having the address
+    List<Nft> findByCreatorOrReceiver(String address, String address1);
 }

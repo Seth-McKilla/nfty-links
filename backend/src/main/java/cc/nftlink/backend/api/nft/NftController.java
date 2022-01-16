@@ -44,6 +44,6 @@ public class NftController {
     public List<Nft> getNFTs(
             @ApiIgnore @AuthenticationPrincipal User user
     ) {
-        return nftService.getNftsByCreator(user);
+        return nftService.getNftsByCreatorOrReceiver(user);
     }
 }
