@@ -9,6 +9,7 @@ type Inputs = {
   name: string;
   description: string;
   image: File;
+  chain: string;
 };
 
 declare const process: {
@@ -45,6 +46,7 @@ const Create: NextPage = () => {
     name,
     description,
     image,
+    chain
   }) => {
     setLoading(true);
     try {
@@ -128,6 +130,27 @@ const Create: NextPage = () => {
             {errors.description && (
               <span className="text-sm text-red-500">
                 Description is required
+              </span>
+            )}
+          </div>
+
+          <div className="mb-6">
+            <label
+              className="block mb-2 text-lg font-bold text-gray-700 "
+              htmlFor="description"
+            >
+              Chain
+            </label>
+            <input
+              className="w-full px-5 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="chain"
+              type="text"
+              placeholder="Enter chain you want to deploy to"
+              {...register("chain", { required: true })}
+            />
+            {errors.chain && (
+              <span className="text-sm text-red-500">
+                Chain is required
               </span>
             )}
           </div>

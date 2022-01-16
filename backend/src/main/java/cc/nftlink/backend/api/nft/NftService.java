@@ -24,6 +24,7 @@ public class NftService {
                 .description(request.getDescription())
                 .name(request.getName())
                 .image(request.getImage())
+                .chain(request.getChain())
                 .claimed(false)
                 .creator(user.getAddress())
                 .address(null)

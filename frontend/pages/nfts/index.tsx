@@ -25,7 +25,8 @@ const Home: NextPage<Props> = (props) => {
       id: "",
       image: "",
       name: "",
-      receiver: ""
+      receiver: "",
+      chain: "",
     }]);
     const [authToken, setAuthToken] = useState('')
 
@@ -87,6 +88,7 @@ const Home: NextPage<Props> = (props) => {
                   {nft.address && <p className="text-base text-gray-700"><b>Address: </b>  {nft.address}</p>}
                   {nft.id && <p className="text-base text-gray-700"><b>Claim ID: </b>  {nft.id}</p>}
                   {nft.image && <p className="text-base text-gray-700"><b>Image: </b>  {nft.image}</p>}
+                  {nft.chain && <p className="text-base text-gray-700"><b>Chain: </b>  {nft.chain}</p>}
                 </div>
               </div>
             ))}

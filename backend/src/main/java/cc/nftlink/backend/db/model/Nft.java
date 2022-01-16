@@ -25,4 +25,6 @@ public class Nft {
     private String creator;
     @Indexed
     private String receiver;
+    @Indexed
+    private String chain;
 }
