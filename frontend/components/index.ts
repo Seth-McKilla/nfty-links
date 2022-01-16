@@ -6,4 +6,5 @@ export { default as ImportOptionsModal } from "./ImportOptionsModal";
 export { default as Layout } from "./Layout";
 export { default as Loader } from "./Loader";
 export { default as MenuDropdown } from "./MenuDropdown";
+export { default as Select } from "./Select";
 export { default as WalletOptionsModal } from "./WalletOptionsModal";

@@ -147,7 +147,7 @@ const Home: NextPage = () => {
                 type="button"
                 onClick={() => setShowConnectModal(false)}
               >
-                Cancel
+                Close
               </button>
             </div>
           </div>

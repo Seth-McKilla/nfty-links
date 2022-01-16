@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Button, Checkbox, FileDropzone, Layout } from "../../components";
+import {
+  Button,
+  Checkbox,
+  FileDropzone,
+  Layout,
+  Select,
+} from "../../components";
 import Link from "next/link";
 
 type Inputs = {
@@ -46,7 +52,6 @@ const Create: NextPage = () => {
     name,
     description,
     image,
-    chain,
   }) => {
     setLoading(true);
     try {
@@ -141,12 +146,9 @@ const Create: NextPage = () => {
             >
               Chain
             </label>
-            <input
-              className="w-full px-5 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="chain"
-              type="text"
-              placeholder="Enter chain you want to deploy to"
-              {...register("chain", { required: true })}
+            <Select
+              options={["Ethereum", "Polygon", "Avalanche"]}
+              // {...register("chain")}
             />
             {errors.chain && (
               <span className="text-sm text-red-500">Chain is required</span>
