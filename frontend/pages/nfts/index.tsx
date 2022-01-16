@@ -6,18 +6,8 @@ import { Button, Layout } from "../../components";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
 
-type NFT = {
-  name: string;
-  description: string;
-  image: string;
-};
-
-interface Props {
-  nfts: NFT[];
-  error: string;
-}
-
-const Home: NextPage<Props> = (props) => {
+const Home: NextPage = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [nfts, setNfts] = useState([
     {
       address: "",
@@ -31,12 +21,10 @@ const Home: NextPage<Props> = (props) => {
       chain: "",
     },
   ]);
-  const [authToken, setAuthToken] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setAuthToken(token);
       const response = fetch(`${NEXT_PUBLIC_API_URL}nfts`, {
         method: "GET",
         headers: {
@@ -47,6 +35,7 @@ const Home: NextPage<Props> = (props) => {
       response
         .then((res) => res.json())
         .then((res) => {
+          console.log(res);
           if (res.error) {
             console.log(res.error);
           } else {
@@ -59,13 +48,6 @@ const Home: NextPage<Props> = (props) => {
   return (
     <Layout>
       <div className="grid p-32">
-        <div className="mr-6">
-          <Link href="/" passHref>
-            <a>
-              <Button>{"Return Home"}</Button>
-            </a>
-          </Link>
-        </div>
         <h1 className="grid text-4xl place-items-center">{"My NFT's"}</h1>
         <div className="grid grid-cols-1 gap-5 p-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2">
           {nfts?.map((nft, idx) => (
@@ -170,27 +152,5 @@ const Home: NextPage<Props> = (props) => {
     </Layout>
   );
 };
-export async function getStaticProps() {
-  let nfts = [
-    {
-      name: "Mountains",
-      description:
-        " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.",
-      image:
-        "https://cdn.pixabay.com/photo/2021/11/16/18/10/nature-6801719_960_720.jpg",
-    },
-  ];
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}nfts`);
-    nfts = await response.json();
-
-    return {
-      props: { nfts, error: null },
-    };
-  } catch (error: any) {
-    console.error(error);
-    return { props: { nfts, error: error?.message } };
-  }
-}
 
 export default Home;
