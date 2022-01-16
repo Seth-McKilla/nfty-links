@@ -27,4 +27,5 @@ public class Nft {
     private String receiver;
     @Indexed
     private String chain;
+    @Indexed NftTypeEnum type;
 }
