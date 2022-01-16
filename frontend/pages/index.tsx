@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import { Layout, Loader, Button } from "../components";
 import useAuthLogin from "../hooks/useAuthLogin";
-import { ImportOptionsModal } from "../components";
+import { ImportOptionsModal, Modal } from "../components";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
 
@@ -19,10 +19,12 @@ const Home: NextPage = () => {
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string>("");
   const [authToken, setAuthToken] = useState<string>("");
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showMarketplacesModal, setShowMarketplacesModal] =
+    useState<boolean>(false);
+  const [showConnectModal, setShowConnectModal] = useState<boolean>(false);
 
   const getAuthToken = async () => {
-    if (!accountData?.address) return;
+    if (!accountData?.address) return setShowConnectModal(true);
     setLoginLoading(true);
 
     try {
@@ -103,7 +105,9 @@ const Home: NextPage = () => {
                 </Link>
               </div>
               <div>
-                <Button onClick={() => setShowModal(true)}>Import NFT</Button>
+                <Button onClick={() => setShowMarketplacesModal(true)}>
+                  Import NFT
+                </Button>
               </div>
             </div>
           ) : (
@@ -126,8 +130,28 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      {showModal && (
-        <ImportOptionsModal open={showModal} setOpen={setShowModal} />
+      {showMarketplacesModal && (
+        <ImportOptionsModal
+          open={showMarketplacesModal}
+          setOpen={setShowMarketplacesModal}
+        />
+      )}
+      {showConnectModal && (
+        <Modal open={showConnectModal}>
+          <div className="p-4 text-center">
+            <h1 className="mb-4 text-4xl font-bold">Connect Wallet</h1>
+            <p className="text-xl">Please connect your wallet to continue.</p>
+            <div className="flex items-center justify-end p-3 mt-1">
+              <button
+                className="px-6 py-2 mb-1 text-sm font-semibold text-red-500 uppercase"
+                type="button"
+                onClick={() => setShowConnectModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
       )}
 
       <div className="grid h-screen place-items-center">
