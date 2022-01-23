@@ -73,7 +73,7 @@ export default async function handler(
       console.log({ recipient, link: `${CLIENT_URL}/${jwtToken}` });
     });
 
-    return res.status(200).json({ message: "Success", error: null });
+    return res.status(200).json({ message: ipnft, error: null });
   } catch (error: any) {
     console.error(error);
     return res.status(500).json({ message: "Error", error: error.message });

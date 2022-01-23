@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { NFTStorage, File } from "nft.storage";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   Button,
@@ -20,23 +19,11 @@ type Inputs = {
   chain: string;
 };
 
-declare const process: {
-  env: {
-    NEXT_PUBLIC_NFT_STORAGE_API_KEY: string;
-    NEXT_PUBLIC_API_URL: string;
-  };
-};
-
-const client = new NFTStorage({
-  token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY,
-});
-
 const Create: NextPage = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [authToken, setAuthToken] = useState<string>("");
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
   const {
@@ -46,38 +33,32 @@ const Create: NextPage = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAuthToken(token);
-    }
-  }, [errors]);
-
   const onSubmit: SubmitHandler<Inputs> = async ({
     name,
     description,
     image,
   }) => {
     setLoading(true);
+
     try {
-      const metadata = await client.store({
-        name,
-        description,
-        image: new File([image], image.name, { type: image.type }),
+      const fieldsString = JSON.stringify({ name, description });
+      const fields = new Blob([fieldsString], {
+        type: "application/json",
       });
 
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}nft/create`, {
+      const formData = new FormData();
+      formData.append("fields", fields);
+      formData.append("image", image);
+
+      const response = await fetch("/api/nfts/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${authToken}`,
-        },
-        body: JSON.stringify({
-          name,
-          description,
-          image: metadata.ipnft,
-        }),
+        body: formData,
       });
+      const data = await response.json();
+
+      if (response.status !== 200) {
+        throw new Error(data.error);
+      }
 
       setShowSuccessModal(true);
     } catch (error: any) {
