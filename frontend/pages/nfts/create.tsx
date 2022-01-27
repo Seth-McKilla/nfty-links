@@ -39,6 +39,7 @@ const Create: NextPage = () => {
     image,
   }) => {
     setLoading(true);
+    setError("");
 
     try {
       const fieldsString = JSON.stringify({ name, description });
@@ -48,7 +49,7 @@ const Create: NextPage = () => {
 
       const formData = new FormData();
       formData.append("fields", fields);
-      formData.append("image", image);
+      formData.append("files", image);
 
       const response = await fetch("/api/nfts/create", {
         method: "POST",

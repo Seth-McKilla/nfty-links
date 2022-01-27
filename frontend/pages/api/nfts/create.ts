@@ -35,9 +35,9 @@ type Recipient = {
 const parseForm = (req: NextApiRequest) => {
   const form = new formidable.IncomingForm();
   return new Promise(function (resolve, reject) {
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, (err, _, files) => {
       if (err) reject(err);
-      else resolve([fields, files]);
+      else resolve({ files });
     });
   });
 };
@@ -54,7 +54,8 @@ export default async function handler(
   }
 
   try {
-    const [fields, files]: any = await parseForm(req); // Fix "any" type
+    const { files }: any = await parseForm(req); // Fix "any" type
+    // Convert blob back to buffer
     const { ipnft } = await client.store({
       name: fields.name,
       description: fields.description,
