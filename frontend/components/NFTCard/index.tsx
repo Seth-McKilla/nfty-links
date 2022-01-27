@@ -15,7 +15,7 @@ export default function NFTCard(props: NFTCardProps) {
     props;
 
   return (
-    <div className="max-w-xs overflow-hidden transition-all duration-200 border border-2 rounded shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1 ease">
+    <div className="max-w-xs overflow-hidden transition-all duration-200 border border-2 rounded shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1.5 ease">
       <Image
         src={
           image && imageName

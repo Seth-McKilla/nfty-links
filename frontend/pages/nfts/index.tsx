@@ -7,7 +7,24 @@ const { NEXT_PUBLIC_API_URL } = process.env;
 const Home: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [nfts, setNfts] = useState([]);
+  const [nfts, setNfts] = useState<NFTCardProps[]>([]);
+  const [filteredNfts, setFilteredNfts] = useState<NFTCardProps[]>([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    setFilteredNfts(nfts);
+  }, [nfts]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value;
+
+    setSearch(search);
+    setFilteredNfts(
+      nfts.filter((nft: NFTCardProps) =>
+        nft.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -47,7 +64,7 @@ const Home: NextPage = () => {
 
     return (
       <div className="grid grid-cols-1 gap-5 p-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {nfts.map((props: NFTCardProps, idx) => (
+        {filteredNfts.map((props: NFTCardProps, idx) => (
           <NFTCard key={`${idx}-${props.image}`} {...props} />
         ))}
       </div>
@@ -63,6 +80,8 @@ const Home: NextPage = () => {
             type="text"
             placeholder="Search NFT by name..."
             className="w-full px-3 py-3 text-sm text-center bg-white border-0 border-2 rounded shadow w-80 placeholder-black-500 text-black-800 focus:outline-none focus:ring"
+            onChange={handleSearch}
+            value={search}
           />
         </div>
         {renderContent()}
