@@ -1,4 +1,5 @@
 import Image from "next/image";
+import useNFTImage from "../../hooks/useNFTImage";
 
 export type NFTCardProps = {
   image: string;
@@ -13,6 +14,8 @@ export type NFTCardProps = {
 export default function NFTCard(props: NFTCardProps) {
   const { image, imageName, name, description, receiver, claimed, chain } =
     props;
+
+  const { imageUrl, loading, error } = useNFTImage(image);
 
   return (
     <div className="max-w-xs overflow-hidden transition-all duration-200 border border-2 rounded shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1.5 ease">
