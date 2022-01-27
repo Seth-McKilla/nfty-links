@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const ipfsUrl = (location: string) => `https://ipfs.io/ipfs/${location}`;
 
 export default function useNFTImage(imageId: string) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    let mounted = true;
+    isMounted.current = true;
 
     const fetchImage = async () => {
+      if (!imageId || !isMounted.current) return;
+      setLoading(true);
+      setError("");
+
       try {
         const response = await fetch(ipfsUrl(`${imageId}/metadata.json`));
         const { image } = await response.json();
@@ -32,7 +37,7 @@ export default function useNFTImage(imageId: string) {
     fetchImage();
 
     return () => {
-      mounted = false;
+      isMounted.current = false;
     };
   }, [imageId]);
 
