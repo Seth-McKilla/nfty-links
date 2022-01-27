@@ -1,4 +1,5 @@
 import Image from "next/image";
+import useNFTImage from "../../hooks/useNFTImage";
 
 export type NFTCardProps = {
   image: string;
@@ -11,18 +12,16 @@ export type NFTCardProps = {
 };
 
 export default function NFTCard(props: NFTCardProps) {
-  const { image, imageName, name, description, receiver, claimed, chain } =
-    props;
+  const { image, name, description, receiver, claimed, chain } = props;
+  const { imageUrl } = useNFTImage(image);
 
   return (
     <div className="max-w-xs overflow-hidden transition-all duration-200 border border-2 rounded shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1.5 ease">
       <Image
-        src={
-          image && imageName
-            ? `https://ipfs.io/ipfs/${image}/${imageName}`
-            : "/images/nftlink.png"
-        }
-        alt={imageName?.split(".")[0]}
+        src={imageUrl ? imageUrl : "/images/nftlink.png"}
+        alt={imageUrl?.split("/").slice(-1)[0]}
+        placeholder="blur"
+        blurDataURL="/images/nftlink.png"
         width={500}
         height={400}
         layout="responsive"
