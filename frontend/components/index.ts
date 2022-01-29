@@ -10,3 +10,4 @@ export { default as Select } from "./Select";
 export { default as WalletOptionsModal } from "./WalletOptionsModal";
 export { default as NFTCard, type NFTCardProps } from "./NFTCard";
 export { default as SideNav } from "./SideNav";
+export { default as Logo } from "./Logo";

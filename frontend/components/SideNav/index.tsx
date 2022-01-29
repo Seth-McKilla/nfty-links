@@ -1,15 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { Logo } from "..";
 
-const Logo = () => (
-  <Image
-    src="/images/nftlink.png"
-    alt="NFT Link logo"
-    width={150}
-    height={75}
-  />
+const LogoLink = () => (
+  <Link href="/" passHref>
+    <a>
+      <Logo height={75} />
+    </a>
+  </Link>
 );
 
 export default function SideNav() {
@@ -27,11 +26,7 @@ export default function SideNav() {
     <div className="fixed h-screen ">
       <div className="flex items-center justify-between w-full p-4 bg-gray-900 rounded-r lg:hidden ">
         <div className="flex items-center justify-between space-x-3">
-          <Link href="/" passHref>
-            <a>
-              <Logo />
-            </a>
-          </Link>
+          <LogoLink />
         </div>
         <div aria-label="toggler" className="flex items-center justify-center">
           <button
@@ -63,11 +58,7 @@ export default function SideNav() {
         } lg:rounded-r transform  lg:translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-full  w-full bg-gray-900 flex-col`}
       >
         <div className="items-center justify-center hidden w-full p-4 space-x-3 lg:flex">
-          <Link href="/" passHref>
-            <a>
-              <Logo />
-            </a>
-          </Link>
+          <LogoLink />
         </div>
         <div className="flex flex-col items-center justify-start w-full pb-5 pl-4 mt-6 space-y-3 border-b border-gray-600 ">
           <button className="flex items-center w-full space-x-6 text-white rounded jusitfy-start focus:outline-none focus:text-indigo-400 ">
