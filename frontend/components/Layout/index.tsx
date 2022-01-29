@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { Button, MenuDropdown, WalletOptionsModal } from "..";
+import { Button, MenuDropdown, WalletOptionsModal, SideNav } from "..";
 import { useAccount } from "wagmi";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -80,23 +79,13 @@ export default function Layout({ children }: { children: ReactNode }) {
         setOpen={setShowWalletOptions}
       />
 
-      <div className="absolute w-screen bg-gradient-to-r from-white via-purple-500 to-pink-500">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center">
-            <Link href="/" passHref>
-              <Image
-                src="/images/nftlink.png"
-                alt="Nfty Link"
-                width={130}
-                height={65}
-                className="cursor-pointer"
-              />
-            </Link>
-          </div>
-          {renderButton()}
-        </div>
+      <div className="fixed w-screen bg-gradient-to-r from-white via-purple-500 to-pink-500 lg:pl-60 place-items-right">
+        <div className="flex justify-end p-4">{renderButton()}</div>
       </div>
-      {children}
+
+      <SideNav />
+
+      <div className="w-screen h-screen lg:pl-60">{children}</div>
     </div>
   );
 }
