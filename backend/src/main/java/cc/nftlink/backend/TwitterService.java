@@ -5,6 +5,7 @@ import cc.nftlink.backend.db.repository.UserRepository;
 import io.github.redouane59.twitter.TwitterClient;
 import io.github.redouane59.twitter.signature.TwitterCredentials;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -13,12 +14,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class TwitterService {
 
+    private
+    @Value("${twitter.access.token}") String accessToken;
+    private
+    @Value("${twitter.access.token.secret}") String accessTokenSecret;
+    private
+    @Value("${twitter.api.key}") String apiKey;
+    private
+    @Value("${twitter.api.secret}") String apiSecret;
+
     private final UserRepository userRepository;
     TwitterClient twitterClient = new TwitterClient(TwitterCredentials.builder()
-            .accessToken("940962950847791106-YTSTQwkYavoVVG4yocx84qhTZmlUhq3")
-            .accessTokenSecret("PDhMAObRy2gaa86pZRlhHELotFjXCti8nt5vYj3H2zkS6")
-            .apiKey("O8Tc5ENLs97iTGJ3aLo3T2CLB")
-            .apiSecretKey("cg7lwTbu0nfNVjlyMob50sutjmE4BStuspSuQAx73HT5WAaAbD")
+            .accessToken("940962950847791106-mPi9FHBsgFXHZSTR5iT7zgB9eiC53kp")
+            .accessTokenSecret("IXCvDPr9yPkqxDtEFMZgo1mqea0IntjJQtRQAZzl0gdny")
+            .apiKey("f4TlApLc3YKdKSUzolYyM1RGn")
+            .apiSecretKey("ZvnqhPUVQOo9WtHkQHOown7sd245DwseTHeubI3ehfADwogsla")
             .build());
 
     public String getTweet() {

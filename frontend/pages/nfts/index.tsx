@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { Layout, Loader, NFTCard, NFTCardProps } from "../../components";
+import { Layout, Loader, NFTCard } from "../../components";
 import {Nft} from "../../models/models";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
