@@ -27,6 +27,9 @@ public class User implements UserDetails {
     @Indexed
     private String username;
     private String email;
+    private String twitterUsername;
+    private String twitterId;
+    private String twitterChallengeText;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

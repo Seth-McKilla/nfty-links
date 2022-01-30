@@ -1,6 +1,5 @@
 package cc.nftlink.backend.api.auth;
 
-import cc.nftlink.backend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class AuthController {
 
-    private final UserRepository userRepository;
     private final AuthService authService;
     private final JwtTokenUtil jwtTokenUtil;
 

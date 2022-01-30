@@ -104,6 +104,13 @@
             <version>4.3.1</version>
         </dependency>
 
+        <!-- TWITTER -->
+        <dependency>
+            <groupId>io.github.redouane59.twitter</groupId>
+            <artifactId>twittered</artifactId>
+            <version>2.15</version>
+        </dependency>
+
     </dependencies>
 
     <build>
