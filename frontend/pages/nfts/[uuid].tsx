@@ -3,6 +3,7 @@ import { Button, Layout } from "../../components";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Loader, Modal } from "../../components";
+import {Nft} from "../../models/models";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
 
@@ -15,17 +16,7 @@ const ViewNFT = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [claiming, setClaiming] = useState<boolean>(false);
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
-  const [nft, setNft] = useState({
-    address: "",
-    claimed: "",
-    creator: "",
-    description: "",
-    id: "",
-    image: "",
-    name: "",
-    receiver: "",
-    chain: "",
-  });
+  const [nft, setNft] = useState<Nft>();
 
   useEffect(() => {
     if (uuid === undefined) {
@@ -92,7 +83,7 @@ const ViewNFT = () => {
       <div className="grid h-screen place-items-center">
         {loading ? (
           <Loader size={8} />
-        ) : (
+        ) : nft && (
           <div className="flex-col justify-items-center">
             <h3 className="text-2xl">
               You can claim the following nft: {uuid}
@@ -134,16 +125,17 @@ const ViewNFT = () => {
                 </p>
                 <p className="text-base text-gray-700">
                   <b>Claimed: </b>
-                  {nft.claimed.toString()}
+                  {nft.totalClaims?.toString() + "/" +  nft.maxClaims?.toString()}
                 </p>
-                {nft.receiver && (
+                {nft.nftOwners && (
                   <p className="text-base text-gray-700">
-                    <b>Receiver: </b> {nft.receiver}
-                  </p>
-                )}
-                {nft.address && (
-                  <p className="text-base text-gray-700">
-                    <b>Address: </b> {nft.address}
+                    <b>NFT Owners: </b>
+                    {nft.nftOwners.map((owner) => (
+                      <span key={owner.address}>
+                        <b>Owner :</b> {owner.owner}
+                        <b>Address: </b> {owner.address}
+                      </span>
+                    ))}
                   </p>
                 )}
                 {nft.id && (
@@ -167,12 +159,12 @@ const ViewNFT = () => {
               {authToken && (
                 <Button
                   loading={claiming}
-                  disabled={!!nft.claimed}
+                    disabled={nft?.maxClaims <= nft?.totalClaims}
                   onClick={() => {
                     claim(nft.id);
                   }}
                 >
-                  {nft.claimed ? "Already claimed" : "Claim"}
+                  {nft?.maxClaims <= nft?.totalClaims ? "Already claimed" : "Claim"}
                 </Button>
               )}
             </div>

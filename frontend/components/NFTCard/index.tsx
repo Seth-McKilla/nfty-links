@@ -1,22 +1,18 @@
 import Image from "next/image";
 import useNFTImage from "../../hooks/useNFTImage";
+import {useRouter} from "next/router";
+import {Nft} from "../../models/models";
 
-export type NFTCardProps = {
-  image: string;
-  imageName: string;
-  name: string;
-  description: string;
-  receiver: string;
-  claimed: boolean;
-  chain: string;
-};
-
-export default function NFTCard(props: NFTCardProps) {
-  const { image, name, description, receiver, claimed, chain } = props;
+export default function NFTCard(props: Nft) {
+  const { image, name, description, chain, totalClaims, maxClaims } = props;
   const { imageUrl } = useNFTImage(image);
+  const router = useRouter();
 
   return (
-    <div className="max-w-xs overflow-hidden transition-all duration-200 border border-2 rounded shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1.5 ease">
+    <div className="max-w-xs overflow-hidden transition-all duration-200 border border-2 rounded shadow-md cursor-pointer hover:shadow-xl hover:-translate-y-1.5 ease"
+    onClick={async () => {
+      await router.push("nfts/" + props.id)
+    }}>
       <Image
         src={imageUrl ? imageUrl : "/images/nftlink.png"}
         alt={imageUrl?.split("/").slice(-1)[0]}
@@ -31,12 +27,13 @@ export default function NFTCard(props: NFTCardProps) {
         <div className="mb-2 text-xl font-bold">{name}</div>
         <p className="text-base text-gray-700">{description}</p>
         <p className="text-xs text-base text-gray-500 truncate">{`Receiver: ${
-          receiver || "None"
+          "receiver" || "None"
         }`}</p>
       </div>
       <div className="px-6 pt-4 pb-2">
         <span className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full">
-          {claimed ? "✔ Claimed" : "❌ Unclaimed"}
+          {(maxClaims <= totalClaims) ? "✔ Claimed" : "❌ Unclaimed"}
+
         </span>
         <span className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full">
           {/* {chain} */}

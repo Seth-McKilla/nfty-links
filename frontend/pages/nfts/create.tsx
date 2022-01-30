@@ -18,6 +18,7 @@ type Inputs = {
   description: string;
   image: File;
   chain: string;
+  maxClaims: number
 };
 
 declare const process: {
@@ -57,6 +58,7 @@ const Create: NextPage = () => {
     name,
     description,
     image,
+    maxClaims
   }) => {
     setLoading(true);
     try {
@@ -76,6 +78,7 @@ const Create: NextPage = () => {
           name,
           description,
           image: metadata.ipnft,
+          maxClaims,
         }),
       });
 
@@ -157,6 +160,27 @@ const Create: NextPage = () => {
             {errors.description && (
               <span className="text-sm text-red-500">
                 Description is required
+              </span>
+            )}
+          </div>
+
+          <div className="mb-6">
+            <label
+              className="block mb-2 text-lg font-bold text-gray-700 "
+              htmlFor="description"
+            >
+              Maximum Number of claims
+            </label>
+            <input
+              className="w-full px-5 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="maxClaims"
+              type="number"
+              placeholder="Max number of NFTs"
+              {...register("maxClaims", { required: true })}
+            />
+            {errors.maxClaims && (
+              <span className="text-sm text-red-500">
+                Max claims is required
               </span>
             )}
           </div>

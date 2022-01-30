@@ -2,11 +2,14 @@ package cc.nftlink.backend.api.nft;
 
 import cc.nftlink.backend.*;
 import cc.nftlink.backend.db.model.Nft;
+import cc.nftlink.backend.db.model.NftOwner;
 import cc.nftlink.backend.db.model.User;
 import cc.nftlink.backend.db.repository.NftRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -28,9 +31,9 @@ public class NftService {
                     .name(request.getName())
                     .image(request.getImage())
                     .chain(request.getChain())
-                    .claimed(false)
+                    .maxClaims(request.getMaxClaims())
+                    .totalClaims(BigInteger.ZERO)
                     .creator(user.getAddress())
-                    .address(null)
                     .build();
             return nftRepository.save(nft);
         }
@@ -54,14 +57,14 @@ public class NftService {
 
     public Nft mintNFT(String id, User user) {
         var nft = nftRepository.findById(id).orElseThrow();
-        if (nft.isClaimed()) {
-            throw new IllegalArgumentException("This NFT has already been claimed");
+        if (nft.getMaxClaims().compareTo(nft.getTotalClaims()) <= 0) {
+            throw new IllegalArgumentException("This NFT has already been claimed the maximum number of times");
         }
         String hash = ipfsService.createIpfsRecord(nft);
         String nftHash =  blockchainService.mintNFT(user.getAddress(), hash);
-        nft.setClaimed(true);
-        nft.setAddress(nftHash);
-        nft.setReceiver(user.getAddress());
+        nft.setTotalClaims(nft.getTotalClaims().add(BigInteger.ONE));
+        NftOwner owner = new NftOwner(nftHash, user.getAddress());
+        nft.getNftOwners().add(owner);
         return nftRepository.save(nft);
     }
 
@@ -70,6 +73,6 @@ public class NftService {
     }
 
     public List<Nft> getNftsByCreatorOrReceiver(User user) {
-        return nftRepository.findByCreatorOrReceiver(user.getAddress(), user.getAddress());
+        return nftRepository.findByCreatorOrNftOwners(user.getAddress(), user.getAddress());
     }
 }
