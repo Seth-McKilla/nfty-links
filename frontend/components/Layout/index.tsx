@@ -4,7 +4,12 @@ import { ReactNode, useState } from "react";
 import { Button, MenuDropdown, WalletOptionsModal, SideNav } from "..";
 import { useAccount } from "wagmi";
 
-export default function Layout({ children }: { children: ReactNode }) {
+interface Props {
+  children: ReactNode;
+  showSideNav?: boolean;
+}
+
+export default function Layout({ children, showSideNav = true }: Props) {
   const [showWalletOptions, setShowWalletOptions] = useState(false);
 
   const [{ data: accountData, loading }, disconnect] = useAccount({
@@ -83,9 +88,11 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="flex justify-end p-4">{renderButton()}</div>
       </div>
 
-      <SideNav />
+      {showSideNav && <SideNav />}
 
-      <div className="w-screen h-screen lg:pl-60">{children}</div>
+      <div className={`w-screen h-screen ${showSideNav && "lg:pl-60"}`}>
+        {children}
+      </div>
     </div>
   );
 }

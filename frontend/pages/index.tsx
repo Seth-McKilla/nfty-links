@@ -129,7 +129,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Layout>
+    <Layout showSideNav={false}>
       {showMarketplacesModal && (
         <ImportOptionsModal
           open={showMarketplacesModal}

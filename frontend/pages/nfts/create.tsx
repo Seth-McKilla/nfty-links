@@ -11,14 +11,13 @@ import {
   Select,
   Modal,
 } from "../../components";
-import Link from "next/link";
 
 type Inputs = {
   name: string;
   description: string;
   image: File;
   chain: string;
-  maxClaims: number
+  maxClaims: number;
 };
 
 declare const process: {
@@ -58,7 +57,7 @@ const Create: NextPage = () => {
     name,
     description,
     image,
-    maxClaims
+    maxClaims,
   }) => {
     setLoading(true);
     try {
@@ -235,13 +234,6 @@ const Create: NextPage = () => {
             Submit
           </Button>
         </form>
-        <div className="mt-8">
-          <Link href="/nfts" passHref>
-            <a>
-              <Button>{"View All NFT's"}</Button>
-            </a>
-          </Link>
-        </div>
       </div>
     </Layout>
   );
