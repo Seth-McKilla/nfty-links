@@ -4,6 +4,7 @@ import { Provider, chain, defaultChains } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { WalletLinkConnector } from "wagmi/connectors/walletLink";
+import { Provider as ContextProvider } from "../context";
 
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
 
@@ -37,8 +38,10 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider autoConnect connectors={connectors}>
-      <Component {...pageProps} />
-    </Provider>
+    <ContextProvider>
+      <Provider autoConnect connectors={connectors}>
+        <Component {...pageProps} />
+      </Provider>
+    </ContextProvider>
   );
 }
