@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import { Layout, Loader, Button } from "../components";
 import useAuthLogin from "../hooks/useAuthLogin";
-import { ImportOptionsModal, Modal } from "../components";
+import { ImportOptionsModal, WalletOptionsModal } from "../components";
 
 const { NEXT_PUBLIC_API_URL } = process.env;
 
@@ -16,6 +16,7 @@ const Home: NextPage = () => {
   // Local State
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string>("");
+  const [showWalletOptions, setShowWalletOptions] = useState<boolean>(false);
   const [showMarketplacesModal, setShowMarketplacesModal] =
     useState<boolean>(false);
 
@@ -66,11 +67,9 @@ const Home: NextPage = () => {
           <div className="mr-6">
             <Button
               loading={loginLoading}
-              onClick={() => {
-                getAuthToken();
-              }}
+              onClick={() => setShowWalletOptions(true)}
             >
-              {"Login"}
+              Connect
             </Button>
           </div>
           {loginError && <p className="text-sm text-red-500">{loginError}</p>}
@@ -81,12 +80,15 @@ const Home: NextPage = () => {
 
   return (
     <Layout showSideNav={false}>
-      {showMarketplacesModal && (
-        <ImportOptionsModal
-          open={showMarketplacesModal}
-          setOpen={setShowMarketplacesModal}
-        />
-      )}
+      <ImportOptionsModal
+        open={showMarketplacesModal}
+        setOpen={setShowMarketplacesModal}
+      />
+
+      <WalletOptionsModal
+        open={showWalletOptions}
+        setOpen={setShowWalletOptions}
+      />
 
       <div className="grid h-screen place-items-center">
         <div className="grid place-items-center">{renderContent()}</div>
