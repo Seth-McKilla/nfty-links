@@ -1,21 +1,15 @@
 import { LOGIN, LOGOUT } from "./constants";
-import { AuthInterface, ReducersInterface } from "./types";
+import { AuthInterface } from "./types";
 
 const combineReducers =
   (...reducers: any) =>
-  (
-    state: ReducersInterface,
-    action: { type: string; payload: ReducersInterface }
-  ) => {
+  (state: AuthInterface, action: { type: string; payload: any }) => {
     for (let i = 0; i < reducers.length; i++)
       state = reducers[i](state, action);
     return state;
   };
 
-const authReducer = (
-  state: AuthInterface,
-  action: { type: string; payload: any }
-) => {
+const auth = (state: AuthInterface, action: { type: string; payload: any }) => {
   switch (action.type) {
     case LOGIN["REQUEST"]:
       return { ...state, loading: true };
@@ -36,8 +30,6 @@ const authReducer = (
   }
 };
 
-const reducers = combineReducers({
-  auth: authReducer,
-});
+const reducers = combineReducers(auth);
 
 export default reducers;

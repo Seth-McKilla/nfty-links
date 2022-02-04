@@ -1,9 +1,12 @@
 import Image from "next/image";
-import { useEffect } from "react";
-import { useConnect, useAccount } from "wagmi";
+import { useEffect, useContext } from "react";
+import { Context } from "../../context";
+import { LOGIN } from "../../context/constants";
+import { useConnect, useAccount, useSignMessage, Connector } from "wagmi";
 import { Button } from "..";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import { Modal } from "..";
+const { NEXT_PUBLIC_API_URL } = process.env;
 
 interface Props {
   open: boolean;
@@ -13,8 +16,46 @@ interface Props {
 export default function WalletOptionsModal(props: Props) {
   const { open, setOpen } = props;
 
+  const { state, dispatch } = useContext(Context);
+
   const [{ data: connectData, loading, error }, connect] = useConnect();
   const [{ data: accountData }] = useAccount();
+  const [_, signMessage] = useSignMessage();
+
+  const login = async (c: Connector) => {
+    try {
+      dispatch({ type: LOGIN["REQUEST"], payload: {} });
+      // Connect to blockchain
+      await connect(c);
+      const address = accountData?.address;
+
+      // Login and receive message to sign
+      const loginResponse = await fetch(
+        `${NEXT_PUBLIC_API_URL}auth/login?publicAddress=${address}`
+      );
+      const message = await loginResponse.text();
+
+      // Sign message and receive auth token
+      const { data: sig } = await signMessage({ message });
+
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}auth/token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address,
+          sig,
+        }),
+      });
+      const token = await response.text();
+      dispatch({ type: LOGIN["SUCCESS"], payload: { token } });
+      setOpen(false);
+    } catch (error: any) {
+      console.error(error);
+      dispatch({ type: LOGIN["FAIL"], payload: { error } });
+    }
+  };
 
   useEffect(() => {
     accountData && setOpen(false);
@@ -33,7 +74,7 @@ export default function WalletOptionsModal(props: Props) {
             loading={loading}
             width={80}
             disabled={!c.ready}
-            onClick={() => connect(c)}
+            onClick={() => login(c)}
           >
             <>
               <div className="mr-3">

@@ -1,16 +1,12 @@
 import { Dispatch } from "react";
 
 export interface AuthInterface {
-  token: string;
-  loading: boolean;
-  error: string | null;
-}
-
-export interface ReducersInterface {
-  auth: AuthInterface;
+  token?: string;
+  loading?: boolean;
+  error?: string | null;
 }
 
 export interface ContextInterface {
-  state: ReducersInterface;
-  dispatch: Dispatch<{ type: string; payload: ReducersInterface }>;
+  state: AuthInterface;
+  dispatch: Dispatch<{ type: string; payload: AuthInterface }>;
 }
