@@ -8,5 +8,5 @@ export interface AuthInterface {
 
 export interface ContextInterface {
   state: AuthInterface;
-  dispatch: Dispatch<{ type: string; payload: AuthInterface }>;
+  dispatch: Dispatch<{ type: string; payload: any }>;
 }

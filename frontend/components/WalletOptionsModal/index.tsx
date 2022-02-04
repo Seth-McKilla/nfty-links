@@ -19,7 +19,7 @@ export default function WalletOptionsModal(props: Props) {
   const { state, dispatch } = useContext(Context);
 
   const [{ data: connectData, loading, error }, connect] = useConnect();
-  const [{ data: accountData }] = useAccount();
+  const [{ data: accountData }, disconnect] = useAccount();
   const [_, signMessage] = useSignMessage();
 
   const login = async (c: Connector) => {
@@ -27,6 +27,7 @@ export default function WalletOptionsModal(props: Props) {
       dispatch({ type: LOGIN["REQUEST"], payload: {} });
       // Connect to blockchain
       await connect(c);
+      console.log("ACCOUNT DATA: ", accountData);
       const address = accountData?.address;
 
       // Login and receive message to sign
@@ -49,11 +50,14 @@ export default function WalletOptionsModal(props: Props) {
         }),
       });
       const token = await response.text();
-      dispatch({ type: LOGIN["SUCCESS"], payload: { token } });
+      if (!token) throw new Error("No token received");
+
+      dispatch({ type: LOGIN["SUCCESS"], payload: token });
       setOpen(false);
     } catch (error: any) {
       console.error(error);
-      dispatch({ type: LOGIN["FAIL"], payload: { error } });
+      disconnect();
+      dispatch({ type: LOGIN["FAIL"], payload: error });
     }
   };
 

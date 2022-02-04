@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
-    "js-cookie": "^3.0.1",
     "next": "12.0.7",
     "nft.storage": "^5.2.0",
     "react": "17.0.2",
@@ -20,7 +19,7 @@
     "react-dropzone": "^11.5.1",
     "react-hook-form": "^7.24.0",
     "react-icons": "^4.3.1",
-    "wagmi": "^0.1.2"
+    "wagmi": "^0.2.8"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",

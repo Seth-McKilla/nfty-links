@@ -1,10 +1,9 @@
 import { createContext, useReducer, ReactNode } from "react";
-import Cookies from "js-cookie";
 import reducers from "./reducers";
 import { AuthInterface, ContextInterface } from "./types";
 
 const initialState: AuthInterface = {
-  token: Cookies.get("token") ?? "",
+  token: "",
   loading: false,
   error: null,
 };
